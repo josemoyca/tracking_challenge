@@ -1,6 +1,8 @@
 package demo.retail.inventory.config;
 
 import demo.retail.inventory.handlers.usecase.GetPageableRecordsUseCase;
+import demo.retail.inventory.handlers.usecase.GetRecordsUByErrorsUseCase;
+import demo.retail.inventory.models.Movement;
 import demo.retail.inventory.models.Record;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +31,13 @@ public class ResourceRoutes {
                         ), Record.class)));
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> getAllRecordsByError(GetRecordsUByErrorsUseCase getRecordsUByErrorsUseCase) {
+        return route(
+                GET("/api/v1/records/error"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(getRecordsUByErrorsUseCase.get(), Record.class)));
+    }
 
 }
