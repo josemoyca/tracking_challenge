@@ -46,7 +46,7 @@ public class ResourceRoutes {
     @Bean
     public RouterFunction<ServerResponse> getMovementsByInventoryId(GetAllMovementsByInventoryUseCase getAllMovementsByInventoryUseCase) {
         return route(
-                GET("/api/v1/movements/{inventoryId}"),
+                GET("/api/v1/movements/product/{inventoryId}"),
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(getAllMovementsByInventoryUseCase.apply(request.pathVariable("inventoryId")), Movement.class)

@@ -20,6 +20,6 @@ public class GetAllMovementsByTypeUseCase implements Function<String, Flux<Movem
 
     @Override
     public Flux<Movement> apply(String type) {
-        return repository.findByAllType(type);
+        return repository.findByType(type);
     }
 }
