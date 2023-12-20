@@ -1,7 +1,6 @@
 package demo.retail.inventory.drivenAdapters.repository;
 
 import demo.retail.inventory.models.Movement;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -10,6 +9,5 @@ import reactor.core.publisher.Flux;
 public interface IMovementRepository extends ReactiveMongoRepository<Movement, String> {
     Flux<Movement> findByInventoryId(String id);
 
-    @Query("{'type': ?0}")
-    Flux<Movement> findByAllType(String type);
+    Flux<Movement> findByType(String type);
 }
