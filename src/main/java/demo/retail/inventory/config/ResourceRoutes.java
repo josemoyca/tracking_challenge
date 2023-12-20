@@ -1,10 +1,12 @@
 package demo.retail.inventory.config;
 
 import demo.retail.inventory.handlers.usecase.GetAllMovementsByInventoryUseCase;
+import demo.retail.inventory.handlers.usecase.GetAllMovementsByTypeUseCase;
 import demo.retail.inventory.handlers.usecase.GetPageableRecordsUseCase;
 import demo.retail.inventory.handlers.usecase.GetRecordsUByErrorsUseCase;
 import demo.retail.inventory.models.Movement;
 import demo.retail.inventory.models.Record;
+import demo.retail.inventory.models.RecordTypes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +50,24 @@ public class ResourceRoutes {
                 request -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(getAllMovementsByInventoryUseCase.apply(request.pathVariable("inventoryId")), Movement.class)
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> getMovementsByRetailSale(GetAllMovementsByTypeUseCase getAllMovementsByTypeUseCase) {
+        return route(
+                GET("/api/v1/movements/retail"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(getAllMovementsByTypeUseCase.apply(RecordTypes.RETAIL_SALE.toString()), Movement.class)
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> getMovementsByWholeSale(GetAllMovementsByTypeUseCase getAllMovementsByTypeUseCase) {
+        return route(
+                GET("/api/v1/movements/wholesale"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(getAllMovementsByTypeUseCase.apply(RecordTypes.WHOLESALE.toString()), Movement.class)
         );
     }
 }
