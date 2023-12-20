@@ -1,5 +1,6 @@
 package demo.retail.inventory.config;
 
+import demo.retail.inventory.handlers.usecase.GetAllMovementsByInventoryUseCase;
 import demo.retail.inventory.handlers.usecase.GetPageableRecordsUseCase;
 import demo.retail.inventory.handlers.usecase.GetRecordsUByErrorsUseCase;
 import demo.retail.inventory.models.Movement;
@@ -40,4 +41,13 @@ public class ResourceRoutes {
                         .body(BodyInserters.fromPublisher(getRecordsUByErrorsUseCase.get(), Record.class)));
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> getMovementsByInventoryId(GetAllMovementsByInventoryUseCase getAllMovementsByInventoryUseCase) {
+        return route(
+                GET("/api/v1/movements/{inventoryId}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(getAllMovementsByInventoryUseCase.apply(request.pathVariable("inventoryId")), Movement.class)
+        );
+    }
 }
