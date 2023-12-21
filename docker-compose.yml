@@ -1,9 +1,9 @@
 version: "3.9"
 services:
-#  consumer-app:
-#    container_name: consumer-app
-#    image: jmoyano275/app-queue-logs
-##    build: .
+#  tracking-inventory-app:
+#    container_name: tracking-inventory-app
+##    image: jmoyano275/tracking-demo-app:latest
+#    build: .
 #    ports:
 #      - "8081:8081"
 #    environment:
@@ -11,7 +11,7 @@ services:
 #      - TRACKING_RABBIT_URI=amqp://guest:guest@my-rabbitmq:5672
 #      - TRACKING_MONGO_URI=mongodb://root:password@mongodb-tracking:27017/admin
 #    networks:
-#      bank_transactions_spring_my-network:
+#      inventory-network:
 #    restart: always
 
   mongodb-consumer:
@@ -24,12 +24,12 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - mongo-data-consumer:/data/db
-#    networks:
-#      bank_transactions_spring_my-network:
-#
-#networks:
-#  bank_transactions_spring_my-network:
-#    external: true
+    networks:
+      inventory-network:
+
+networks:
+  inventory-network:
+    external: true
 
 volumes:
   mongo-data-consumer:
